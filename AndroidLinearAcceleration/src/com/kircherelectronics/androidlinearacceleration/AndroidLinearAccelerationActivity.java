@@ -27,10 +27,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -52,9 +54,11 @@ import com.kircherelectronics.androidlinearacceleration.sensor.observer.Accelera
 import com.kircherelectronics.androidlinearacceleration.sensor.observer.LinearAccelerationSensorObserver;
 
 /**
- * Uses the standard Android TYPE_LINEAR_ACCELERATION sensor to provide the linear accleration and compare it to the acceleration of the device.
+ * Uses the standard Android TYPE_LINEAR_ACCELERATION sensor to provide the
+ * linear accleration and compare it to the acceleration of the device.
+ * 
  * @author Kaleb
- *
+ * 
  */
 public class AndroidLinearAccelerationActivity extends Activity implements
 		Runnable, OnTouchListener, LinearAccelerationSensorObserver,
@@ -488,14 +492,14 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 	private void writeLogToFile()
 	{
 		Calendar c = Calendar.getInstance();
-		String filename = "GyroLinearAcceleration-" + c.get(Calendar.YEAR)
+		String filename = "AndroidLinearAcceleration-" + c.get(Calendar.YEAR)
 				+ "-" + c.get(Calendar.DAY_OF_WEEK_IN_MONTH) + "-"
 				+ c.get(Calendar.HOUR) + "-" + c.get(Calendar.HOUR) + "-"
 				+ c.get(Calendar.MINUTE) + "-" + c.get(Calendar.SECOND)
 				+ ".csv";
 
 		File dir = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "LinearAcceleration" + File.separator
+				+ File.separator + "AndroidLinearAcceleration" + File.separator
 				+ "Logs" + File.separator + "Acceleration");
 		if (!dir.exists())
 		{
@@ -533,9 +537,20 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 		}
 		finally
 		{
-			this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri
-					.parse("file://"
-							+ Environment.getExternalStorageDirectory())));
+			// Update the MediaStore so we can view the file without rebooting.
+			// Note that it appears that the ACTION_MEDIA_MOUNTED approach is
+			// now blocked for non-system apps on Android 4.4.
+			MediaScannerConnection.scanFile(this, new String[]
+			{ "file://" + Environment.getExternalStorageDirectory() }, null,
+					new MediaScannerConnection.OnScanCompletedListener()
+					{
+						@Override
+						public void onScanCompleted(final String path,
+								final Uri uri)
+						{
+
+						}
+					});
 		}
 	}
 

@@ -493,14 +493,14 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 	{
 		Calendar c = Calendar.getInstance();
 		String filename = "AndroidLinearAcceleration-" + c.get(Calendar.YEAR)
-				+ "-" + c.get(Calendar.DAY_OF_WEEK_IN_MONTH) + "-"
-				+ c.get(Calendar.HOUR) + "-" + c.get(Calendar.HOUR) + "-"
-				+ c.get(Calendar.MINUTE) + "-" + c.get(Calendar.SECOND)
+				+ "-" + (c.get(Calendar.MONTH) + 1) + "-"
+				+ c.get(Calendar.DAY_OF_MONTH) + "-" + c.get(Calendar.HOUR)
+				+ "-" + c.get(Calendar.MINUTE) + "-" + c.get(Calendar.SECOND)
 				+ ".csv";
 
 		File dir = new File(Environment.getExternalStorageDirectory()
 				+ File.separator + "AndroidLinearAcceleration" + File.separator
-				+ "Logs" + File.separator + "Acceleration");
+				+ "Logs");
 		if (!dir.exists())
 		{
 			dir.mkdirs();
@@ -541,7 +541,7 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 			// Note that it appears that the ACTION_MEDIA_MOUNTED approach is
 			// now blocked for non-system apps on Android 4.4.
 			MediaScannerConnection.scanFile(this, new String[]
-			{ "file://" + Environment.getExternalStorageDirectory() }, null,
+			{ file.getPath() }, null,
 					new MediaScannerConnection.OnScanCompletedListener()
 					{
 						@Override

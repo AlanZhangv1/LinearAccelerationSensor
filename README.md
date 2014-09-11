@@ -1,4 +1,4 @@
-AndroidLinearAcceleration
+Linear Acceleration Sensor
 =========================
 
 ![](http://www.kircherelectronics.com/bundles/keweb/css/images/android_linear_acceleration_phone_graphic.png?raw=true)

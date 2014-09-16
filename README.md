@@ -1,30 +1,32 @@
-AndroidLinearAcceleration
+Linear Acceleration Sensor
 =========================
 
-Android application example of implementing the sensor TYPE_LINEAR_ACCELERATION...
+![](http://www.kircherelectronics.com/bundles/keweb/css/images/android_linear_acceleration_phone_graphic.png?raw=true)
 
-Measure linear acceleration with your Android device! Android Linear Acceleration uses the standard Android linear acceleration sensor to estimate linear acceleration with almost no lag time in the correction. You can visualize the output with sweet line graphics and awesome gauges to quickly compare outputs and you can even log the output to a .csv file!
+Linear Acceleration Sensor provides a working open source code example and Android application that demonstrates implementing the sensor TYPE_LINEAR_ACCELERATION.
 
-An accelerometer can measure the static gravity field of earth (like a tilt sensor) or it can measure measure linear acceleration (like accelerating in a vehicle), but it cannot measure both at the same time. When talking about linear acceleration in reference to an acceleration sensor, what we really mean is Linear Acceleration = Measured Acceleration - Gravity. The hard part is determining what part of the signal is gravity.
+Linear Acceleration Sensor is intended to provide developers with code examples and an application to quickly test devices for an implementation of Sensor.TYPE_LINEAR_ACCELERATION. Some Android devices provide an implementation of linear acceleration with Sensor.TYPE_LINEAR_ACCELERATION and others do not. The implementation and performance of Sensor.TYPE_LINEAR_ACCELERATION varies from device to device. Some devices rely on only the acceleration sensor via low-pass filters or other methods. Devices equiped with a gyroscopes will fuse the acceleration sensor to provide an estimation of linear acceleration. 
 
-Sensor fusions take measurements from multiple sensors and fuse them together to create a better estimate than either sensor could do by itself. The most common type of sensor fusion to determine linear acceleration is an accelerometer and gyroscope, which measures the rotation of the device. If you know the rotation of the device and the acceleration of gravity, you can determine the tilt of the device and subtract that from the measured acceleration to get linear acceleration. However, not all devices have gyroscopes. You will need one on your device to use Android Linear Accleration.
+Almost all implementations of Sensor.TYPE_LINEAR_ACCELERATION are not ideal. The implementations succesfully isolate gravity from the acceleration under static conditions. However, while the device is actually under linear acceleration, the estimation tends to become skewed. This means that attempting to measure the acceleration of a vehicle, for instance, using Sensor.TYPE_LINEAR_ACCELERATION will result in measurements that are inaccurate.
 
-What would you want to measure the linear acceleration of? Lots of freaking amazing stuff.
+On devices that implement linear acceleration with a low-pass filter, the continuous acceleration causes the low-pass filter to confuse the gravity estimation with the linear acceleration. This causes the estimation of the orientation of the device to become skewed, which in turn causes the linear acceleration estimation to be inaccurate.
 
-For example, you can measure the linear acceleration of (not recommended):
+On devices that implement linear acceleration with a gyroscope and acceleration sensor fusion, a complimentary filter is often used. The complimentary filter uses the acceleration sensor to compenstate for the drift of the gyroscope. Under extend periods of linear acceleration, the acceleration sensor is not reliable for drift compensations and begins to compensate the gyroscope for drift erroneously. The errorneous drift compensations skew the orientation estimations, which in turn causes the linear acceleration estimations to be inaccurate. 
 
-• Your car driving around a road course
-• Your mountain bike going up a hill
-• Your plane accelerating
-• Your dog chasing your cat
-• Your R/C truck flying through the air
-• Your rockets for your science fair project
+Both the low-pass filter and gyroscope fusion's shortcomings apply not just to linear acceleration, but also to estimating rotational displacement, velocity and acceleration.
 
-Totally impress your friends with all these cool features!
+Linear Acceleration Sensor allows developers and other interested parties to determine if a specific device implements Sensor.TYPE_LINEAR_ACCELERATION, to explore the performance of the sensor under different conditions and to compare the sensor to other implementations.
 
 Features:
-• Log all of your data in real-time
-• Spiffy gauges to display the outputs
-• Pretty graphs to visualize how awesome your filter is working
 
-Yup, you can make your phone at least 10 times more amazing (rough estimate) by downloading Gyro Linear Acceleration and then measuring the linear acceleration of you doing something super sweet.
+* Plot all axes of the linear acceleration sensor in real-time
+* Log all axes of the linear acceleration sensor to a .CSV file
+* Examine the peformance of the linear acceleration sensor under different conditions
+* Compare the performance of the linear acceleration sensor to other implementations
+
+Useful Links:
+
+* [Linear Acceleration Sensor Homepage](http://www.kircherelectronics.com/androidlinearacceleration/androidlinearacceleration)
+* [Download Linear Acceleration Sensor from Google Play](https://play.google.com/store/apps/details?id=com.kircherelectronics.androidlinearacceleration)
+
+Written by [Kircher Electronics](https://www.kircherelectronics.com)

@@ -32,7 +32,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -44,8 +43,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidplot.xy.XYPlot;
-import com.kircherelectronics.androidlinearacceleration.gauge.GaugeAccelerationFlat;
-import com.kircherelectronics.androidlinearacceleration.gauge.GaugeRotationFlat;
+import com.kircherelectronics.androidlinearacceleration.gauge.GaugeAcceleration;
+import com.kircherelectronics.androidlinearacceleration.gauge.GaugeRotation;
 import com.kircherelectronics.androidlinearacceleration.plot.DynamicPlot;
 import com.kircherelectronics.androidlinearacceleration.plot.PlotColor;
 import com.kircherelectronics.androidlinearacceleration.sensor.AccelerationSensor;
@@ -83,16 +82,16 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 	private float zoom = 1.2f;
 
 	// The Acceleration Gauge
-	private GaugeRotationFlat gaugeAccelerationTilt;
+	private GaugeRotation gaugeAccelerationTilt;
 
 	// The LPF Gauge
-	private GaugeRotationFlat gaugeLinearAccelTilt;
+	private GaugeRotation gaugeLinearAccelTilt;
 
 	// The Acceleration Gauge
-	private GaugeAccelerationFlat gaugeAcceleration;
+	private GaugeAcceleration gaugeAcceleration;
 
 	// The LPF Gauge
-	private GaugeAccelerationFlat gaugeLinearAcceleration;
+	private GaugeAcceleration gaugeLinearAcceleration;
 
 	// Icon to indicate logging is active
 	private ImageView iconLogger;
@@ -155,8 +154,16 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_android_linear_acceleration);
 
-		View view = findViewById(R.id.scroll_view);
+		View view = findViewById(R.id.plot_layout);
 		view.setOnTouchListener(this);
+		
+		TextView accelerationLable = (TextView) this
+				.findViewById(R.id.label_acceleration_name_0);
+		accelerationLable.setText("Acceleration");
+
+		TextView lpfLable = (TextView) this
+				.findViewById(R.id.label_acceleration_name_1);
+		lpfLable.setText("LinearAcceleration");
 
 		// Create the graph plot
 		XYPlot plot = (XYPlot) findViewById(R.id.plot_sensor);
@@ -209,6 +216,12 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 		// Log the data
 		case R.id.menu_settings_logger_plotdata:
 			startDataLog();
+			return true;
+			
+		case R.id.action_vector_view:
+			Intent vectorIntent = new Intent(this,
+					AccelerationVectorActivity.class);
+			startActivity(vectorIntent);
 			return true;
 
 			// Log the data
@@ -350,11 +363,11 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 	 */
 	private void initGauges()
 	{
-		gaugeAccelerationTilt = (GaugeRotationFlat) findViewById(R.id.gauge_acceleration_tilt);
-		gaugeLinearAccelTilt = (GaugeRotationFlat) findViewById(R.id.gauge_linear_acceleration_tilt);
+		gaugeAccelerationTilt = (GaugeRotation) findViewById(R.id.gauge_rotation_0);
+		gaugeLinearAccelTilt = (GaugeRotation) findViewById(R.id.gauge_rotation_1);
 
-		gaugeAcceleration = (GaugeAccelerationFlat) findViewById(R.id.gauge_acceleration);
-		gaugeLinearAcceleration = (GaugeAccelerationFlat) findViewById(R.id.gauge_linear_acceleration);
+		gaugeAcceleration = (GaugeAcceleration) findViewById(R.id.gauge_acceleration_0);
+		gaugeLinearAcceleration = (GaugeAcceleration) findViewById(R.id.gauge_acceleration_1);
 	}
 
 	/**
@@ -380,7 +393,7 @@ public class AndroidLinearAccelerationActivity extends Activity implements
 
 		helpDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		helpDialog.setContentView(getLayoutInflater().inflate(R.layout.help,
+		helpDialog.setContentView(getLayoutInflater().inflate(R.layout.help_dialog_view,
 				null));
 
 		helpDialog.show();

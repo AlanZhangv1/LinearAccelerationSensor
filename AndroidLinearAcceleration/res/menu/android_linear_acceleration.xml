@@ -6,8 +6,13 @@
         android:showAsAction="always"
         android:title="@string/log_data_label"/>
     <item
+        android:id="@+id/action_vector_view"
+        android:title="@string/action_vector_view"/>
+    <item
+        android:id="@+id/action_settings_sensor"
+        android:title="@string/sensor_name"/>
+    <item
         android:id="@+id/menu_settings_help"
-        android:showAsAction="always"
-        android:title="@string/filter_help"/>
+        android:title="@string/action_help"/>
 
 </menu>

@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/label_sensor_name"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="@string/filter_help"
+                        android:text="@string/action_help"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
                 </RelativeLayout>
             </RelativeLayout>

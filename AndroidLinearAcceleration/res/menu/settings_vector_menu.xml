@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_plot"
+        android:title="@string/plot_label"/>
+    
+        <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings">
+        <menu>
+               <item
+                android:id="@+id/action_settings_sensor"
+                android:title="@string/sensor_name"/>
+            <item
+                android:id="@+id/action_help"
+                android:title="@string/action_help"/>
+        </menu>
+    </item>
+
+</menu>
